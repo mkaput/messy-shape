@@ -1,4 +1,4 @@
-group 'pl.edu.agh'
+group 'messyshape'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -7,6 +7,7 @@ buildscript {
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -14,13 +15,32 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
+mainClassName = 'messyshape.MainKt'
+
 repositories {
     mavenCentral()
+
+    flatDir {
+        dirs 'lib'
+    }
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
+    compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+
+    // surfaceplotter from local jar
+    compile name: 'surfaceplotter-2.0.2'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'messy-shape', 'Implementation-Version': version
+    }
 }

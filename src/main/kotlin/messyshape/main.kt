@@ -1,4 +1,4 @@
-package pl.edu.agh.messyshape
+package messyshape
 
 fun main(argv: Array<String>) {
     print("Hello World!")
