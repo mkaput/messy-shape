@@ -35,6 +35,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
     compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
 
+    // https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-svggen
+    compile group: 'org.apache.xmlgraphics', name: 'batik-svggen', version: '1.8'
+
     // surfaceplotter from local jar
     compile name: 'surfaceplotter-2.0.2'
 }
