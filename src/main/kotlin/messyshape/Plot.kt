@@ -44,10 +44,10 @@ class Plot {
         window.pack()
 
 
-        n = 10
+        n = 9
         sliderLabel = JLabel("Aktualna wartość n: " + n)
 
-        nSlider = JSlider(JSlider.HORIZONTAL, 1, 16, 10)
+        nSlider = JSlider(JSlider.HORIZONTAL, 2, 16, 9)
         with(nSlider) {
             setBorder(EmptyBorder(10, 10, 10, 10))
             setMajorTickSpacing(5)
@@ -64,7 +64,7 @@ class Plot {
     }
 
     fun run() {
-        solve(10)
+        solve(9)
         window.isVisible = true
     }
 
