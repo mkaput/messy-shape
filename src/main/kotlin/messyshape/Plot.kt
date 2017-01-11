@@ -4,11 +4,11 @@ import net.ericaro.surfaceplotter.JSurfacePanel
 import net.ericaro.surfaceplotter.surface.ArraySurfaceModel
 import java.awt.BorderLayout
 import java.awt.Dimension
-import javax.swing.*
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JSlider
 import javax.swing.border.EmptyBorder
-import javax.swing.event.ChangeEvent
-import javax.swing.event.ChangeListener
-
 
 class Plot {
     private val window: JFrame
@@ -17,7 +17,7 @@ class Plot {
     private val panel1: JPanel
     private val nSlider: JSlider
     private val sliderLabel: JLabel
-    var n: Int
+    private var n: Int = 9
 
     init {
         window = JFrame("messy shape")
@@ -40,44 +40,38 @@ class Plot {
             isConfigurationVisible = false
         }
 
-        window.contentPane.add(plotFrame, BorderLayout.CENTER)
-        window.pack()
-
-
-        n = 9
-        sliderLabel = JLabel("Aktualna wartość n: " + n)
+        sliderLabel = JLabel("Ilość podziałów na elementy skończone: $n")
 
         nSlider = JSlider(JSlider.HORIZONTAL, 2, 16, 9)
         with(nSlider) {
-            setBorder(EmptyBorder(10, 10, 10, 10))
-            setMajorTickSpacing(5)
-            setMinorTickSpacing(1)
-            setPaintTicks(true)
-            addChangeListener(SliderListener())
+            border = EmptyBorder(10, 10, 10, 10)
+            majorTickSpacing = 5
+            minorTickSpacing = 1
+            paintTicks = true
+            paintLabels = true
+            addChangeListener({
+                if (!nSlider.valueIsAdjusting) {
+                    n = nSlider.value
+                    sliderLabel.text = "Ilość podziałów na elementy skończone: $n"
+                    solve(n)
+                }
+            })
         }
 
         panel1 = JPanel()
         panel1.add(sliderLabel)
         panel1.add(nSlider)
+
+        window.contentPane.add(plotFrame, BorderLayout.CENTER)
         window.contentPane.add(panel1, BorderLayout.SOUTH)
         window.pack()
     }
 
     fun run() {
-        solve(9)
+        solve(n)
         window.isVisible = true
     }
 
     fun solve(n: Int) = mes(n, plotModel)
-
-    inner class SliderListener : ChangeListener {
-
-        override fun stateChanged(e: ChangeEvent) {
-            val tmp: Int = nSlider.value
-            n = tmp
-            sliderLabel.text = "Aktualna wartość n: " + n
-            solve(n)
-        }
-    }
 }
 

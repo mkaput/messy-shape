@@ -20,14 +20,14 @@ fun mes(n: Int, output: ArraySurfaceModel) {
         }
     }
 
-    output.setValues(0f, 2f * n + 1f, 0f, 2f * n + 1f, 2 * n + 1, v, null)
+    output.setValues(-1f, 1f, -1f, 1f, 2 * n + 1, v, null)
 }
 
 private fun solveMatrix(n: Int): RealVector =
     LUDecomposition(mkA(n)).solver.solve(mkB(n))
 
 private fun mkA(n: Int): RealMatrix {
-    val s = (n + 1) * (3 * n + 1);
+    val s = (n + 1) * (3 * n + 1)
     val m = Array2DRowRealMatrix(s, s)
 
     for (i in 0 until n * (2 * n + 1)) {
@@ -83,7 +83,7 @@ private fun mkB(n: Int): RealVector {
         m[i] = 0.5 * h * (g(-1.0 + (i - 1.0) * h, 1.0) + g(-1.0 + (i + 1.0) * h, 1.0))
     }
 
-    m[2 * n] = 0.5 * h * (g(1.0 - h, 1.0) + g(1.0, 1.0 - h));
+    m[2 * n] = 0.5 * h * (g(1.0 - h, 1.0) + g(1.0, 1.0 - h))
 
     for (i in 1..n) {
         m[(i + 1) * (2 * n + 1) - 1] = 0.5 * h * (g(1.0, 1.0 - (i - 1.0) * h) + g(1.0, 1.0 - (i + 1.0) * h))
@@ -94,7 +94,7 @@ private fun mkB(n: Int): RealVector {
             0.5 * h * (g(1.0, 1.0 - (i - 1.0) * h) + g(1.0, 1.0 - (i + 1.0) * h))
     }
 
-    m[s - 1] = 0.5 * h * (g(1.0 - h, -1.0) + g(1.0, -1.0 + h));
+    m[s - 1] = 0.5 * h * (g(1.0 - h, -1.0) + g(1.0, -1.0 + h))
 
     for (i in 1 until n) {
         m[(s - (n + 1)) + i] = 0.5 * h * (g(((i - 1.0) * h), -1.0) + g((i + 1.0) * h, -1.0))
