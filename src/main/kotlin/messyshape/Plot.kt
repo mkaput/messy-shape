@@ -64,7 +64,7 @@ class Plot {
     }
 
     fun run() {
-        solve(4)
+        solve(10)
         window.isVisible = true
     }
 
