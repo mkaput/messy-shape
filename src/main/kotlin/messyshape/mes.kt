@@ -2,10 +2,9 @@ package messyshape
 
 import net.ericaro.surfaceplotter.surface.ArraySurfaceModel
 import org.apache.commons.math3.linear.*
-import java.lang.Math.*
 
-fun mes(n: Int, output: ArraySurfaceModel) {
-    val m = solveMatrix(n)
+fun mes(n: Int, g: (Double, Double) -> Double, output: ArraySurfaceModel) {
+    val m = solveMatrix(n, g)
     val v = Array(2 * n + 1) { FloatArray(2 * n + 1) }
 
     var mi = 0
@@ -23,8 +22,8 @@ fun mes(n: Int, output: ArraySurfaceModel) {
     output.setValues(-1f, 1f, -1f, 1f, 2 * n + 1, v, null)
 }
 
-private fun solveMatrix(n: Int): RealVector =
-    LUDecomposition(mkA(n)).solver.solve(mkB(n))
+private fun solveMatrix(n: Int, g: (Double, Double) -> Double): RealVector =
+    LUDecomposition(mkA(n)).solver.solve(mkB(n, g))
 
 private fun mkA(n: Int): RealMatrix {
     val s = (n + 1) * (3 * n + 1)
@@ -67,7 +66,7 @@ private fun mkA(n: Int): RealMatrix {
     return m
 }
 
-private fun mkB(n: Int): RealVector {
+private fun mkB(n: Int, g: (Double, Double) -> Double): RealVector {
     val s = (n + 1) * (3 * n + 1)
     val m = ArrayRealVector(s)
 
@@ -101,13 +100,6 @@ private fun mkB(n: Int): RealVector {
     }
 
     return m
-}
-
-private fun g(x: Double, y: Double): Double {
-    val r = sqrt(x * x + y * y)
-    val cos = cos(atan(y / x) - PI / 4)
-
-    return cbrt(r * r) * cbrt(cos * cos)
 }
 
 private val matrix = arrayOf(
